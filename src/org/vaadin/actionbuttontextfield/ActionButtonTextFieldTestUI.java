@@ -1,21 +1,17 @@
-package org.vaadin.resetbuttonfortextfield;
-
-import java.util.Date;
+package org.vaadin.actionbuttontextfield;
 
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.event.FieldEvents;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
+
+import java.util.Date;
 
 @SuppressWarnings("serial")
-public class ResetButtonForTextFieldTestUI extends UI {
+public class ActionButtonTextFieldTestUI extends UI {
 
     @Override
     protected void init(VaadinRequest request) {
@@ -24,7 +20,13 @@ public class ResetButtonForTextFieldTestUI extends UI {
         setContent(layout);
 
         final TextField tf = new TextField("Type something, please");
-        ResetButtonForTextField.extend(tf);
+        ActionButtonTextField actionButtonTextField = ActionButtonTextField.extend(tf);
+        actionButtonTextField.addExtraButtonClickListener(new ActionButtonTextField.ClickedActionButtonEventListener() {
+            @Override
+            public void go(ActionButtonTextField.ClickedActionButtonEvent clickedActionButtonEvent) {
+                System.out.println("HERE!!!");
+            }
+        });
         layout.addComponent(tf);
         tf.setImmediate(true);
         tf.setWidth("300px");

@@ -1,6 +1,4 @@
-package org.vaadin.resetbuttonfortextfield.widgetset.client;
-
-import org.vaadin.resetbuttonfortextfield.ResetButtonForTextField;
+package org.vaadin.actionbuttontextfield.widgetset.client;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
@@ -16,14 +14,16 @@ import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.extensions.AbstractExtensionConnector;
 import com.vaadin.client.ui.VTextField;
 import com.vaadin.shared.ui.Connect;
+import org.vaadin.actionbuttontextfield.ActionButtonTextField;
 
-@Connect(ResetButtonForTextField.class)
-public class ResetButtonForTextFieldConnector extends
+@Connect(ActionButtonTextField.class)
+public class ActionButtonTextFieldConnector extends
         AbstractExtensionConnector implements KeyUpHandler,
         AttachEvent.Handler, StateChangeEvent.StateChangeHandler {
     private static final long serialVersionUID = -737765038361894693L;
 
     public static final String CLASSNAME = "resetbuttonfortextfield";
+
 
     private VTextField textField;
     private Element resetButtonElement;
@@ -57,7 +57,7 @@ public class ResetButtonForTextFieldConnector extends
     /*-{
         var self = this; 
         el.onclick = $entry(function() { 
-            self.@org.vaadin.resetbuttonfortextfield.widgetset.client.ResetButtonForTextFieldConnector::clearTextField()();
+            self.@org.vaadin.actionbuttontextfield.widgetset.client.ActionButtonTextFieldConnector::clearTextField()();
         }); 
     }-*/;
 
@@ -100,5 +100,6 @@ public class ResetButtonForTextFieldConnector extends
         textField.valueChange(true);
         updateResetButtonVisibility();
         textField.getElement().focus();
+        getRpcProxy(ActionButtonTextFieldRpc.class).go();
     }
 }
