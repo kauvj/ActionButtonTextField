@@ -20,7 +20,7 @@
             <description>
             Application widgetset</description>
             <param-name>widgetset</param-name>
-            <param-value>org.vaadin.actionbuttontextfield.widgetset.ActionButtonForTextFieldWidgetset</param-value>
+            <param-value>org.vaadin.actionbuttontextfield.widgetset.ActionButtonTextFieldWidgetset</param-value>
         </init-param>		
 	</servlet>
 	<servlet-mapping>

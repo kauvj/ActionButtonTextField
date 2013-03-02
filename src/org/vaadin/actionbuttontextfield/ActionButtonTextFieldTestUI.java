@@ -6,7 +6,7 @@ import com.vaadin.event.FieldEvents;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
+import org.vaadin.actionbuttontextfield.widgetset.client.ActionButtonType;
 
 import java.util.Date;
 
@@ -21,9 +21,11 @@ public class ActionButtonTextFieldTestUI extends UI {
 
         final TextField tf = new TextField("Type something, please");
         ActionButtonTextField actionButtonTextField = ActionButtonTextField.extend(tf);
-        actionButtonTextField.addExtraButtonClickListener(new ActionButtonTextField.ClickedActionButtonEventListener() {
+        actionButtonTextField.getState().type = ActionButtonType.ACTION_CLEAR;
+        actionButtonTextField.addClickListener(new ActionButtonTextField.ClickListener() {
             @Override
-            public void go(ActionButtonTextField.ClickedActionButtonEvent clickedActionButtonEvent) {
+            public void buttonClick(ActionButtonTextField.ClickEvent clickEvent) {
+                TextField wrappedField = clickEvent.getTextField();
                 System.out.println("HERE!!!");
             }
         });
@@ -57,7 +59,7 @@ public class ActionButtonTextFieldTestUI extends UI {
         Button b1 = new Button("Clear the value of the textfield",
                 new Button.ClickListener() {
                     @Override
-                    public void buttonClick(ClickEvent event) {
+                    public void buttonClick(Button.ClickEvent event) {
                         tf.setValue("");
                     }
                 });
@@ -66,7 +68,7 @@ public class ActionButtonTextFieldTestUI extends UI {
                 new Button.ClickListener() {
 
                     @Override
-                    public void buttonClick(ClickEvent event) {
+                    public void buttonClick(Button.ClickEvent event) {
                         tf.setValue(new Date().toString());
                     }
                 });

@@ -2,9 +2,11 @@ package org.vaadin.actionbuttontextfield;
 
 import com.vaadin.server.AbstractClientConnector;
 import com.vaadin.server.AbstractExtension;
+import com.vaadin.server.ClientConnector;
 import com.vaadin.ui.TextField;
 import com.vaadin.util.ReflectTools;
 import org.vaadin.actionbuttontextfield.widgetset.client.ActionButtonTextFieldRpc;
+import org.vaadin.actionbuttontextfield.widgetset.client.ActionButtonTextFieldState;
 
 import java.lang.reflect.Method;
 import java.util.EventObject;
@@ -17,21 +19,34 @@ public class ActionButtonTextField extends AbstractExtension {
         return me;
     }
 
-    public interface ClickedActionButtonEventListener {
-        static Method METHOD = ReflectTools.findMethod(ClickedActionButtonEventListener.class,
-                "go", ClickedActionButtonEvent.class);
-
-        public void go(ClickedActionButtonEvent clickedActionButtonEvent);
+    public void setActionButtonType(String type) {
+        getState().type = type;
     }
 
-    public class ClickedActionButtonEvent extends EventObject {
+    @Override
+    public ActionButtonTextFieldState getState() {
+        return (ActionButtonTextFieldState) super.getState();
+    }
 
-        public ClickedActionButtonEvent(ActionButtonTextField actionButtonTextField) {
+    protected Class<? extends ClientConnector> getSupportedParentType() {
+        return TextField.class;
+    }
+
+    public interface ClickListener {
+        static Method METHOD = ReflectTools.findMethod(ClickListener.class,
+                "buttonClick", ClickEvent.class);
+
+        public void buttonClick(ClickEvent clickEvent);
+    }
+
+    public class ClickEvent extends EventObject {
+
+        public ClickEvent(ActionButtonTextField actionButtonTextField) {
             super(actionButtonTextField);
         }
 
-        public ActionButtonTextField getTextField() {
-            return (ActionButtonTextField) getSource();
+        public TextField getTextField() {
+            return (TextField) getParent();
         }
 
     }
@@ -40,18 +55,18 @@ public class ActionButtonTextField extends AbstractExtension {
         registerRpc(new ActionButtonTextFieldRpc() {
             @Override
             public void go() {
-                fireEvent(new ClickedActionButtonEvent(ActionButtonTextField.this));
+                fireEvent(new ClickEvent(ActionButtonTextField.this));
             }
         });
     }
 
-    public void addExtraButtonClickListener(ClickedActionButtonEventListener listener) {
-        super.addListener(ClickedActionButtonEvent.class, listener, ClickedActionButtonEventListener.METHOD);
+    public void addClickListener(ClickListener listener) {
+        super.addListener(ClickEvent.class, listener, ClickListener.METHOD);
     }
 
-    public void removeRefreshListener(ClickedActionButtonEventListener listener) {
-        super.removeListener(ClickedActionButtonEvent.class, listener,
-                ClickedActionButtonEventListener.METHOD);
+    public void removeClickListener(ClickListener listener) {
+        super.removeListener(ClickEvent.class, listener,
+                ClickListener.METHOD);
     }
 
 }

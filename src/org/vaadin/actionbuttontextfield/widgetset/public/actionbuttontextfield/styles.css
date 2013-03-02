@@ -1,8 +1,8 @@
-.resetbuttonfortextfield-textfield {
+.actionbuttontextfield-textfield {
     padding-right: 16pt !important;
 }
 
-.resetbuttonfortextfield-resetbutton {
+.actionbuttontextfield-resetbutton {
     position: relative;
     display: inline-block;
     vertical-align: bottom;
@@ -16,16 +16,16 @@
     background-repeat: no-repeat;
 }
 
-.resetbuttonfortextfield-resetbutton:hover {
+.actionbuttontextfield-resetbutton:hover {
     background-image: url(resetbutton-hover.svg);
     cursor: pointer;
 }
 
-.v-ie8 .resetbuttonfortextfield-resetbutton {
+.v-ie8 .actionbuttontextfield-resetbutton {
     background-image: url(resetbutton-default.png);
 }
 
-.v-ie8 .resetbuttonfortextfield-resetbutton:hover {
+.v-ie8 .actionbuttontextfield-resetbutton:hover {
     background-image: url(resetbutton-hover.png);    
 }
 

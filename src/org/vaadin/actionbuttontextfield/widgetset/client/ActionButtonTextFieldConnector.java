@@ -16,38 +16,40 @@ import com.vaadin.client.ui.VTextField;
 import com.vaadin.shared.ui.Connect;
 import org.vaadin.actionbuttontextfield.ActionButtonTextField;
 
+/**
+ * This class adds a div to the right side of a text field. The div is styled based upon
+ * the state (getState()) set for the field. This connector also sends back an event when
+ * the div (styled to look like a button via styles.css) is clicked.
+ */
 @Connect(ActionButtonTextField.class)
 public class ActionButtonTextFieldConnector extends
         AbstractExtensionConnector implements KeyUpHandler,
         AttachEvent.Handler, StateChangeEvent.StateChangeHandler {
     private static final long serialVersionUID = -737765038361894693L;
-
-    public static final String CLASSNAME = "resetbuttonfortextfield";
-
-
+    public static final String CLASSNAME = "actionbuttontextfield";
     private VTextField textField;
-    private Element resetButtonElement;
+    private Element actionButton;
 
     @Override
     protected void extend(ServerConnector target) {
         target.addStateChangeHandler(new StateChangeEvent.StateChangeHandler() {
-        private static final long serialVersionUID = -8439729365677484553L;        	
+            private static final long serialVersionUID = -8439729365677484553L;
+
             @Override
             public void onStateChanged(StateChangeEvent stateChangeEvent) {
                 Scheduler.get().scheduleDeferred(new ScheduledCommand() {
                     @Override
                     public void execute() {
-                        updateResetButtonVisibility();
+                        updateActionButtonVisibility();
                     }
                 });
             }
         });
-    	
-    	textField = (VTextField) ((ComponentConnector) target).getWidget();
+        textField = (VTextField) ((ComponentConnector) target).getWidget();
         textField.addStyleName(CLASSNAME + "-textfield");
 
-        resetButtonElement = DOM.createDiv();
-        resetButtonElement.addClassName(CLASSNAME + "-resetbutton");
+        // create the div for the action button
+        actionButton = DOM.createDiv();
 
         textField.addAttachHandler(this);
         textField.addKeyUpHandler(this);
@@ -55,10 +57,10 @@ public class ActionButtonTextFieldConnector extends
 
     public native void addResetButtonClickListener(Element el)
     /*-{
-        var self = this; 
-        el.onclick = $entry(function() { 
-            self.@org.vaadin.actionbuttontextfield.widgetset.client.ActionButtonTextFieldConnector::clearTextField()();
-        }); 
+        var self = this;
+        el.onclick = $entry(function () {
+            self.@org.vaadin.actionbuttontextfield.widgetset.client.ActionButtonTextFieldConnector::clickActionButton()();
+        });
     }-*/;
 
     public native void removeResetButtonClickListener(Element el)
@@ -69,36 +71,56 @@ public class ActionButtonTextFieldConnector extends
     @Override
     public void onAttachOrDetach(AttachEvent event) {
         if (event.isAttached()) {
-            textField.getElement().getParentElement()
-                    .insertAfter(resetButtonElement, textField.getElement());
-            updateResetButtonVisibility();
-            addResetButtonClickListener(resetButtonElement);
-        } else {
-            Element parentElement = resetButtonElement.getParentElement();
-            if (parentElement != null) {
-                parentElement.removeChild(resetButtonElement);
+            String actionButtonType = getState().type;
+            if (ActionButtonType.ACTION_CLEAR.equals(actionButtonType)) {
+                actionButton.addClassName(CLASSNAME + "-resetbutton");
+            } else if (ActionButtonType.ACTION_DOTS.equals(actionButtonType)) {
+                actionButton.addClassName(CLASSNAME + "-dots");
+            } else if (ActionButtonType.ACTION_SEARCH.equals(actionButtonType)) {
+                actionButton.addClassName(CLASSNAME + "-search");
             }
-            removeResetButtonClickListener(resetButtonElement);
+            textField.getElement().getParentElement()
+                    .insertAfter(actionButton, textField.getElement());
+            updateActionButtonVisibility();
+            addResetButtonClickListener(actionButton);
+        } else {
+            Element parentElement = actionButton.getParentElement();
+            if (parentElement != null) {
+                parentElement.removeChild(actionButton);
+            }
+            removeResetButtonClickListener(actionButton);
         }
     }
 
     @Override
     public void onKeyUp(KeyUpEvent event) {
-        updateResetButtonVisibility();
+        updateActionButtonVisibility();
     }
 
-    private void updateResetButtonVisibility() {
-        if (textField.getValue().isEmpty()) {
-            resetButtonElement.getStyle().setDisplay(Display.NONE);
-        } else {
-            resetButtonElement.getStyle().clearDisplay();
+    @Override
+    public ActionButtonTextFieldState getState() {
+        return (ActionButtonTextFieldState) super.getState();
+    }
+
+    /**
+     * Remove the clear icon when the text field is empty
+     */
+    private void updateActionButtonVisibility() {
+        if (ActionButtonType.ACTION_CLEAR.equals(getState().type)) {
+            if (textField.getValue().isEmpty()) {
+                actionButton.getStyle().setDisplay(Display.NONE);
+            } else {
+                actionButton.getStyle().clearDisplay();
+            }
         }
     }
 
-    private void clearTextField() {
-        textField.setValue("");
-        textField.valueChange(true);
-        updateResetButtonVisibility();
+    private void clickActionButton() {
+        if (ActionButtonType.ACTION_CLEAR.equals(getState().type)) {
+            textField.setValue("");
+            textField.valueChange(true);
+        }
+        updateActionButtonVisibility();
         textField.getElement().focus();
         getRpcProxy(ActionButtonTextFieldRpc.class).go();
     }
