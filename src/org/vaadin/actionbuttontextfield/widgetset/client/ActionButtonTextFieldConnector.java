@@ -102,11 +102,9 @@ public class ActionButtonTextFieldConnector extends
         return (ActionButtonTextFieldState) super.getState();
     }
 
-    /**
-     * Remove the clear icon when the text field is empty
-     */
     private void updateActionButtonVisibility() {
         if (ActionButtonType.ACTION_CLEAR.equals(getState().type)) {
+            // remove the button when the text field is empty
             if (textField.getValue().isEmpty()) {
                 actionButton.getStyle().setDisplay(Display.NONE);
             } else {
