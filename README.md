@@ -22,3 +22,6 @@ side. The search and upload buttons do nothing until you add a click listener on
         }
     });
 
+
+This code started as a fork from the ResetButtonForTextField project..
+
