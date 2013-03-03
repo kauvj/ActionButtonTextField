@@ -1,4 +1,4 @@
-Vaadin 7 add-on **ActionButtonTextField** version 1.0.0. It adds a reset button, a search button or an upload
+Vaadin 7 add-on **ActionButtonTextField** version 1.0.1. It adds a reset button, a search button or an upload
 button to the TextField component allowing user to perform actions within the text field.
 
 The buttons are drawn using SVG images in supported browsers. With IE8 PNG versions of those are used.
