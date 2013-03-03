@@ -16,6 +16,20 @@
     background-repeat: no-repeat;
 }
 
+.actionbuttontextfield-search {
+    position: relative;
+    display: inline-block;
+    vertical-align: bottom;
+    right: 15pt;
+    top: -3pt;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    background-image: url(magnifying-glass.gif);
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
 .actionbuttontextfield-resetbutton:hover {
     background-image: url(resetbutton-hover.svg);
     cursor: pointer;
@@ -26,6 +40,6 @@
 }
 
 .v-ie8 .actionbuttontextfield-resetbutton:hover {
-    background-image: url(resetbutton-hover.png);    
+    background-image: url(resetbutton-hover.png);
 }
 

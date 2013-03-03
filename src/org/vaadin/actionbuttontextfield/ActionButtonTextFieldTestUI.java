@@ -21,7 +21,7 @@ public class ActionButtonTextFieldTestUI extends UI {
 
         final TextField tf = new TextField("Type something, please");
         ActionButtonTextField actionButtonTextField = ActionButtonTextField.extend(tf);
-        actionButtonTextField.getState().type = ActionButtonType.ACTION_CLEAR;
+        actionButtonTextField.getState().type = ActionButtonType.ACTION_SEARCH;
         actionButtonTextField.addClickListener(new ActionButtonTextField.ClickListener() {
             @Override
             public void buttonClick(ActionButtonTextField.ClickEvent clickEvent) {
