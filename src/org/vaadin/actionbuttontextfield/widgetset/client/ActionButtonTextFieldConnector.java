@@ -74,8 +74,8 @@ public class ActionButtonTextFieldConnector extends
             String actionButtonType = getState().type;
             if (ActionButtonType.ACTION_CLEAR.equals(actionButtonType)) {
                 actionButton.addClassName(CLASSNAME + "-resetbutton");
-            } else if (ActionButtonType.ACTION_DOTS.equals(actionButtonType)) {
-                actionButton.addClassName(CLASSNAME + "-dots");
+            } else if (ActionButtonType.ACTION_UPLOAD.equals(actionButtonType)) {
+                actionButton.addClassName(CLASSNAME + "-upload");
             } else if (ActionButtonType.ACTION_SEARCH.equals(actionButtonType)) {
                 actionButton.addClassName(CLASSNAME + "-search");
             }

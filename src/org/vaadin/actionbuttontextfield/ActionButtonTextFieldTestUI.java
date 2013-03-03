@@ -19,19 +19,44 @@ public class ActionButtonTextFieldTestUI extends UI {
         layout.setMargin(true);
         setContent(layout);
 
-        final TextField tf = new TextField("Type something, please");
-        ActionButtonTextField actionButtonTextField = ActionButtonTextField.extend(tf);
-        actionButtonTextField.getState().type = ActionButtonType.ACTION_SEARCH;
-        actionButtonTextField.addClickListener(new ActionButtonTextField.ClickListener() {
+        final TextField tf = new TextField("Clear Action");
+        ActionButtonTextField clearButtonTextField = ActionButtonTextField.extend(tf);
+        clearButtonTextField.getState().type = ActionButtonType.ACTION_CLEAR;
+        clearButtonTextField.addClickListener(new ActionButtonTextField.ClickListener() {
             @Override
             public void buttonClick(ActionButtonTextField.ClickEvent clickEvent) {
-                TextField wrappedField = clickEvent.getTextField();
-                System.out.println("HERE!!!");
+                Notification.show("Clear Action Button Clicked...");
             }
         });
         layout.addComponent(tf);
         tf.setImmediate(true);
         tf.setWidth("300px");
+
+        final TextField searchField = new TextField("Search Action");
+        ActionButtonTextField searchButtonTextField = ActionButtonTextField.extend(searchField);
+        searchButtonTextField.getState().type = ActionButtonType.ACTION_SEARCH;
+        searchButtonTextField.addClickListener(new ActionButtonTextField.ClickListener() {
+            @Override
+            public void buttonClick(ActionButtonTextField.ClickEvent clickEvent) {
+                Notification.show("Search Action Button Clicked...");
+            }
+        });
+        layout.addComponent(searchField);
+        searchField.setImmediate(true);
+        searchField.setWidth("300px");
+
+        final TextField uploadField = new TextField("Upload Action");
+        ActionButtonTextField uploadButtonTextField = ActionButtonTextField.extend(uploadField);
+        uploadButtonTextField.getState().type = ActionButtonType.ACTION_UPLOAD;
+        uploadButtonTextField.addClickListener(new ActionButtonTextField.ClickListener() {
+            @Override
+            public void buttonClick(ActionButtonTextField.ClickEvent clickEvent) {
+                Notification.show("Upload Action Button Clicked...");
+            }
+        });
+        layout.addComponent(uploadField);
+        uploadField.setImmediate(true);
+        uploadField.setWidth("300px");
 
         final Label textChangeEventListenerLabel = new Label();
         textChangeEventListenerLabel.setCaption("I show textChangeEvents!");
