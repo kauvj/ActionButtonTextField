@@ -55,7 +55,7 @@ public class ActionButtonTextFieldConnector extends
         textField.addKeyUpHandler(this);
     }
 
-    public native void addResetButtonClickListener(Element el)
+    public native void addActionButtonClickListener(Element el)
     /*-{
         var self = this;
         el.onclick = $entry(function () {
@@ -63,7 +63,7 @@ public class ActionButtonTextFieldConnector extends
         });
     }-*/;
 
-    public native void removeResetButtonClickListener(Element el)
+    public native void removeActionButtonClickListener(Element el)
     /*-{
         el.onclick = null;
     }-*/;
@@ -82,13 +82,13 @@ public class ActionButtonTextFieldConnector extends
             textField.getElement().getParentElement()
                     .insertAfter(actionButton, textField.getElement());
             updateActionButtonVisibility();
-            addResetButtonClickListener(actionButton);
+            addActionButtonClickListener(actionButton);
         } else {
             Element parentElement = actionButton.getParentElement();
             if (parentElement != null) {
                 parentElement.removeChild(actionButton);
             }
-            removeResetButtonClickListener(actionButton);
+            removeActionButtonClickListener(actionButton);
         }
     }
 

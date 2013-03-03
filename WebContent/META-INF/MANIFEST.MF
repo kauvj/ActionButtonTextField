@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
-Implementation-Title: ResetButtonForTextField
+Implementation-Title: ActionButtonTextField
 Implementation-Version: 1.0.3
 Vaadin-Package-Version: 1
 Class-Path: 
-Vaadin-Widgetsets: org.vaadin.resetbuttonfortextfield.widgetset.ResetB
- uttonForTextFieldWidgetset
+Vaadin-Widgetsets: org.vaadin.resetbuttonfortextfield.widgetset.Action
+ ButtonTextFieldWidgetset
 
